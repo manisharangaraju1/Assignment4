@@ -111,7 +111,8 @@ class ProductAdd extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const form = document.forms.addProduct;
-    this.props.createProduct({
+    const { createProduct } = this.props;
+    createProduct({
       Name: form.name.value,
       Price: parseFloat(form.price.value.slice(1)),
       Category: form.category.value,
@@ -239,7 +240,9 @@ class ProductList extends React.Component {
       body: JSON.stringify({ query })
     });
     const result = await response.json();
-    this.setState({ products: result.data.productList });
+    if (result.data) {
+      this.setState({ products: result.data.productList });
+    }
   }
 
   async createProduct(newProduct) {

@@ -74,7 +74,8 @@ class ProductAdd extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const form = document.forms.addProduct;
-    this.props.createProduct({
+    const { createProduct } = this.props;
+    createProduct({
       Name: form.name.value,
       Price: parseFloat(form.price.value.slice(1)),
       Category: form.category.value,
@@ -159,7 +160,9 @@ class ProductList extends React.Component {
       body: JSON.stringify({ query }),
     });
     const result = await response.json();
-    this.setState({ products: result.data.productList });
+    if (result.data) {
+      this.setState({ products: result.data.productList });
+    }
   }
 
   async createProduct(newProduct) {
@@ -177,13 +180,13 @@ class ProductList extends React.Component {
   }
 
   render() {
-    const allProducts = this.state.products;
+    const allProducts = this.state.products ;
     return (
       <div>
         <h1>My Company MyInventory</h1>
         Showing all available products
         <hr />
-        <ProductTable products={allProducts} />
+        <ProductTable products={ allProducts } />
         <hr />
         Add a new product to inventory
         <hr />
