@@ -25,7 +25,8 @@
         "linebreak-style": ["error", "windows"],
         "react/prop-types": "off",
         "react/no-multi-comp": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
 
     }
 }

@@ -180,13 +180,13 @@ class ProductList extends React.Component {
   }
 
   render() {
-    const allProducts = this.state.products ;
+    const allProducts = this.state.products;
     return (
       <div>
         <h1>My Company MyInventory</h1>
         Showing all available products
         <hr />
-        <ProductTable products={ allProducts } />
+        <ProductTable products={allProducts} />
         <hr />
         Add a new product to inventory
         <hr />
