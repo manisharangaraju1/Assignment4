@@ -1,3 +1,7 @@
+/* eslint "react/react-in-jsx-scope": "off" */
+/* globals React ReactDOM */
+/* eslint "react/jsx-no-undef": "off" */
+
 const contentNode = document.getElementById('contents');
 
 class ProductRow extends React.Component {
@@ -38,8 +42,13 @@ class ProductRow extends React.Component {
         React.createElement(
           'div',
           {
+            role: 'button',
             style: linkStyle,
+            tabIndex: 0,
             onClick: () => {
+              this.handleOnClick(product.image);
+            },
+            onKeyDown: () => {
               this.handleOnClick(product.image);
             }
           },
@@ -197,7 +206,7 @@ class ProductAdd extends React.Component {
         ),
         React.createElement(
           'button',
-          null,
+          { type: 'button' },
           'Add Product'
         )
       )
@@ -239,7 +248,7 @@ class ProductList extends React.Component {
               id
             }
           }`;
-    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
+    await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables: { newProduct } })
@@ -248,6 +257,7 @@ class ProductList extends React.Component {
   }
 
   render() {
+    const allProducts = this.state.products;
     return React.createElement(
       'div',
       null,
@@ -258,7 +268,7 @@ class ProductList extends React.Component {
       ),
       'Showing all available products',
       React.createElement('hr', null),
-      React.createElement(ProductTable, { products: this.state.products }),
+      React.createElement(ProductTable, { products: allProducts }),
       React.createElement('hr', null),
       'Add a new product to inventory',
       React.createElement('hr', null),

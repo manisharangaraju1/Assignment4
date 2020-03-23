@@ -1,3 +1,7 @@
+/* eslint "react/react-in-jsx-scope": "off" */
+/* globals React ReactDOM */
+/* eslint "react/jsx-no-undef": "off" */
+
 const contentNode = document.getElementById('contents');
 
 
@@ -24,8 +28,11 @@ class ProductRow extends React.Component {
         <td>{product.Category}</td>
         <td>
           <div
+            role="button"
             style={linkStyle}
+            tabIndex={0}
             onClick={() => { this.handleOnClick(product.image); }}
+            onKeyDown={() => { this.handleOnClick(product.image); }}
           >
             {' '}
             View
@@ -40,7 +47,7 @@ class ProductRow extends React.Component {
 function ProductTable(props) {
   const { products } = props;
   const productRows = products.map(
-    (product) => <ProductRow key={product.id} product={product} />,
+    product => <ProductRow key={product.id} product={product} />,
   );
   return (
     <table className="bordered-table">
@@ -52,7 +59,7 @@ function ProductTable(props) {
           <th>Image</th>
         </tr>
       </thead>
-      <tbody>{productRows}</tbody>
+      <tbody>{ productRows }</tbody>
     </table>
   );
 }
@@ -119,7 +126,7 @@ class ProductAdd extends React.Component {
               </tr>
             </tbody>
           </table>
-          <button>Add Product</button>
+          <button type="button">Add Product</button>
         </form>
       </div>
     );
@@ -161,7 +168,7 @@ class ProductList extends React.Component {
               id
             }
           }`;
-    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
+    await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables: { newProduct } }),
@@ -170,12 +177,13 @@ class ProductList extends React.Component {
   }
 
   render() {
+    const allProducts = this.state.products;
     return (
       <div>
         <h1>My Company MyInventory</h1>
         Showing all available products
         <hr />
-        <ProductTable products={this.state.products} />
+        <ProductTable products={allProducts} />
         <hr />
         Add a new product to inventory
         <hr />
